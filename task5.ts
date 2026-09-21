@@ -1,6 +1,18 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 // Написать функцию, которая разворачивает вложенные массивы в один
 
-const array = [1, [2, 3], [4], 5, [6, 7, 8]];
+function flattenArray<T>(arr: (T | T[])[]): T[] {
+  const result: T[] = [];
 
-const result = [1, 2, 3, 4, 5, 6, 7, 8];
+  for (const item of arr) {
+    if (Array.isArray(item)) {
+      result.push(...flattenArray(item));
+    } else {
+      result.push(item);
+    }
+  }
+  return result;
+}
+const array: (number | number[])[] = [1, [2, 3], [4], 5, [6, 7, 8]];
+
+const result = flattenArray<number>(array);
+console.log(result);
